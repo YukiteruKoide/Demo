@@ -1,0 +1,42 @@
+-- Databricks notebook source
+-- MAGIC %md
+-- MAGIC # 新規ダッシュボード作成
+-- MAGIC 新しくなったLakeview Dashboardを試してみよう
+-- MAGIC https://qiita.com/taka_yayoi/items/32afd1566b5bc3bedbec
+-- MAGIC
+-- MAGIC <img src='https://sajpstorage.blob.core.windows.net/maruyama/handsOn/dataeng_handson/Lakeview_dashboard.png' width='800'>
+-- MAGIC
+-- MAGIC ### 1) 新規ダッシュボードボタンをクリックしたら、ダッシュボード名をつけよう。
+-- MAGIC
+-- MAGIC ### 2) データセットの登録
+-- MAGIC
+-- MAGIC <img src='https://sajpstorage.blob.core.windows.net/maruyama/handsOn/dataeng_handson/dashboard_dataset.png' width='600'>
+-- MAGIC
+-- MAGIC ### 3) キャンパス作成
+-- MAGIC
+-- MAGIC - Textでタイトルを作成 (Markdown)
+-- MAGIC <img src='https://sajpstorage.blob.core.windows.net/maruyama/handsOn/dataeng_handson/text_input.png' width='600'>
+-- MAGIC
+-- MAGIC - Table作成
+-- MAGIC 表示カラムは適当に
+-- MAGIC <img src='https://sajpstorage.blob.core.windows.net/maruyama/handsOn/dataeng_handson/table.png' width='600'>
+-- MAGIC
+-- MAGIC - Filter作成
+-- MAGIC churn カラムでFilter (Yes/No)
+-- MAGIC <img src='https://sajpstorage.blob.core.windows.net/maruyama/handsOn/dataeng_handson/filter.png' width='600'>
+-- MAGIC
+-- MAGIC - Bar Chart作成
+-- MAGIC MonthlyCharge と paymentMethodで BarChartを作成
+-- MAGIC <img src='https://sajpstorage.blob.core.windows.net/maruyama/handsOn/dataeng_handson/bar.png' width='600'>
+-- MAGIC
+-- MAGIC
+-- MAGIC ### 4) 公開することで他のユーザーも参照出来る
+-- MAGIC 他の参加者と共有してみてください。
+-- MAGIC
+-- MAGIC <img src='https://sajpstorage.blob.core.windows.net/maruyama/handsOn/dataeng_handson/koukai.png' width='200'>
+
+-- COMMAND ----------
+
+-- MAGIC %md ## 完成
+-- MAGIC
+-- MAGIC <img src='https://sajpstorage.blob.core.windows.net/maruyama/handsOn/dataeng_handson/dashboard_lakeview.png'>

@@ -1,0 +1,322 @@
+{
+  "datasets" : [ {
+    "name" : "8a479ad3",
+    "displayName" : "売上分析",
+    "query" : "USE CATALOG `users`;\nUSE SCHEMA `default`;\n\nSELECT * FROM users.yukiteru_koide.customer_summary_table",
+    "catalog" : "users",
+    "schema" : "default"
+  }, {
+    "name" : "d0a71203",
+    "displayName" : "売上分析",
+    "query" : "USE CATALOG `users`;\nUSE SCHEMA `default`;\n\nSELECT * FROM users.yukiteru_koide.customer_summary_table",
+    "catalog" : "users",
+    "schema" : "default"
+  }, {
+    "name" : "7b9da974",
+    "displayName" : "店舗別売上ランキング（上位10件）",
+    "query" : "USE CATALOG `users`;\nUSE SCHEMA `default`;\n\nSELECT\n  s.store_name,\n  SUM(ss.total_sales) AS total_sales\nFROM\n  users.yukiteru_koide.store_sales_summary_table ss\nJOIN\n  users.yukiteru_koide.stores_table s\n  ON ss.store_id = s.store_id\nGROUP BY\n  s.store_name\nORDER BY\n  total_sales DESC\nLIMIT 10;",
+    "catalog" : "users",
+    "schema" : "default"
+  }, {
+    "name" : "c2111dc4",
+    "displayName" : "売上遷移",
+    "query" : "USE CATALOG `users`;\nUSE SCHEMA `default`;\n\nSELECT\n  month,\n  SUM(total_sales) AS monthly_sales\nFROM\n  users.yukiteru_koide.store_sales_summary_table\nGROUP BY\n  month\nORDER BY\n  month;",
+    "catalog" : "users",
+    "schema" : "default"
+  }, {
+    "name" : "196c53b6",
+    "displayName" : "商品カテゴリ別売上",
+    "query" : "USE CATALOG `users`;\nUSE SCHEMA `default`;\n\nSELECT\n  p.category,\n  ROUND(SUM(p.price * t.quantity), 2) AS category_sales\nFROM\n  users.yukiteru_koide.transactions_table t\nJOIN\n  users.yukiteru_koide.products_table p\n  ON t.product_id = p.product_id\nGROUP BY\n  p.category\nORDER BY\n  category_sales DESC;",
+    "catalog" : "users",
+    "schema" : "default"
+  }, {
+    "name" : "56184142",
+    "displayName" : "優良顧客ランキング（Top 10）",
+    "query" : "USE CATALOG `users`;\nUSE SCHEMA `default`;\n\nSELECT\n  c.customer_id,\n  cs.total_spent,\n  cs.transaction_count\nFROM\n  users.yukiteru_koide.customer_summary_table cs\nJOIN\n  users.yukiteru_koide.customers_table c\n  ON cs.customer_id = c.customer_id\nORDER BY\n  cs.total_spent DESC\nLIMIT 10;",
+    "catalog" : "users",
+    "schema" : "default"
+  }, {
+    "name" : "1b19a5bf",
+    "displayName" : "ヒートマップ",
+    "query" : "USE CATALOG `users`;\nUSE SCHEMA `default`;\n\nSELECT\n  `customer_id`,\n  SUM(`quantity`) AS `total_quantity`,\n  COUNT(`purchase_date`) AS `purchase_frequency`\nFROM\n  users.yukiteru_koide.transactions_table\nGROUP BY\n  `customer_id`",
+    "catalog" : "users",
+    "schema" : "default"
+  } ],
+  "pages" : [ {
+    "name" : "7756bad7",
+    "displayName" : "無題のページ",
+    "layout" : [ {
+      "widget" : {
+        "name" : "825ebace",
+        "textbox_spec" : "# yukiteru_martダッシュボード\n"
+      },
+      "position" : {
+        "x" : 0,
+        "y" : 0,
+        "width" : 6,
+        "height" : 2
+      }
+    }, {
+      "widget" : {
+        "name" : "f63a22f0",
+        "queries" : [ {
+          "name" : "main_query",
+          "query" : {
+            "datasetName" : "8a479ad3",
+            "fields" : [ {
+              "name" : "bin(transaction_count, binWidth=2)",
+              "expression" : "BIN_FLOOR(`transaction_count`, 2)"
+            }, {
+              "name" : "sum(avg_unit_price)",
+              "expression" : "SUM(`avg_unit_price`)"
+            } ],
+            "disaggregated" : false
+          }
+        } ],
+        "spec" : {
+          "version" : 3,
+          "widgetType" : "histogram",
+          "encodings" : {
+            "x" : {
+              "fieldName" : "bin(transaction_count, binWidth=2)",
+              "scale" : {
+                "type" : "quantitative"
+              },
+              "displayName" : "transaction_count"
+            },
+            "y" : {
+              "fieldName" : "sum(avg_unit_price)",
+              "scale" : {
+                "type" : "quantitative"
+              },
+              "displayName" : "Sum of avg_unit_price"
+            }
+          },
+          "mark" : {
+            "layout" : "layer"
+          },
+          "frame" : {
+            "title" : "total_spent",
+            "showTitle" : true
+          }
+        }
+      },
+      "position" : {
+        "x" : 0,
+        "y" : 2,
+        "width" : 3,
+        "height" : 6
+      }
+    }, {
+      "widget" : {
+        "name" : "6fef6e45",
+        "queries" : [ {
+          "name" : "c57978b21afc4fb5b7e961b6b6806274",
+          "query" : {
+            "datasetName" : "d0a71203",
+            "fields" : [ {
+              "name" : "transaction_count_BIN",
+              "expression" : "COUNT(`transaction_count`)"
+            }, {
+              "name" : "transaction_count_BIN_LOWER_BOUND",
+              "expression" : "COUNT(`transaction_count`)"
+            }, {
+              "name" : "transaction_count_BIN_STEP",
+              "expression" : "COUNT(`transaction_count`)"
+            }, {
+              "name" : "COUNT",
+              "expression" : "COUNT(`transaction_count`)"
+            } ],
+            "disaggregated" : false
+          }
+        } ],
+        "spec" : {
+          "version" : 0,
+          "viz_spec" : {
+            "display_name" : "transaction_count",
+            "description" : "",
+            "viz_type" : "CHART",
+            "serialized_options" : "{\"version\":2,\"globalSeriesType\":\"histogram\",\"sortX\":true,\"sortY\":true,\"legend\":{\"traceorder\":\"normal\"},\"xAxis\":{\"type\":\"-\",\"labels\":{\"enabled\":true}},\"yAxis\":[{\"type\":\"-\"},{\"type\":\"-\",\"opposite\":true}],\"alignYAxesAtZero\":true,\"error_y\":{\"type\":\"data\",\"visible\":true},\"series\":{\"stacking\":null,\"error_y\":{\"type\":\"data\",\"visible\":true}},\"seriesOptions\":{},\"valuesOptions\":{},\"direction\":{\"type\":\"counterclockwise\"},\"sizemode\":\"diameter\",\"coefficient\":1,\"numberFormat\":\"0,0.[00000]\",\"percentFormat\":\"0[.]00%\",\"textFormat\":\"\",\"missingValuesAsZero\":true,\"useAggregationsUi\":true,\"swappedAxes\":false,\"dateTimeFormat\":\"YYYY-MM-DD HH:mm:ss\",\"showDataLabels\":false,\"numBins\":10,\"columnConfigurationMap\":{\"x\":{\"column\":\"transaction_count\",\"id\":\"column_d7d540914285\"}},\"isAggregationOn\":true,\"condensed\":true,\"withRowNumber\":true}",
+            "query_name" : "c57978b21afc4fb5b7e961b6b6806274"
+          }
+        }
+      },
+      "position" : {
+        "x" : 3,
+        "y" : 2,
+        "width" : 3,
+        "height" : 6
+      }
+    }, {
+      "widget" : {
+        "name" : "eedf57c7",
+        "queries" : [ {
+          "name" : "f64f387e9419402a8a18b8299d8f9f75",
+          "query" : {
+            "datasetName" : "7b9da974",
+            "fields" : [ {
+              "name" : "store_name",
+              "expression" : "`store_name`"
+            }, {
+              "name" : "column_d7d540914574",
+              "expression" : "SUM(`total_sales`)"
+            } ],
+            "disaggregated" : false
+          }
+        } ],
+        "spec" : {
+          "version" : 0,
+          "viz_spec" : {
+            "display_name" : "店舗別売上ランキング（上位10件）",
+            "description" : "",
+            "viz_type" : "CHART",
+            "serialized_options" : "{\"version\":2,\"globalSeriesType\":\"column\",\"sortX\":true,\"sortY\":true,\"legend\":{\"traceorder\":\"normal\"},\"xAxis\":{\"type\":\"-\",\"labels\":{\"enabled\":true}},\"yAxis\":[{\"type\":\"-\"},{\"type\":\"-\",\"opposite\":true}],\"alignYAxesAtZero\":true,\"error_y\":{\"type\":\"data\",\"visible\":true},\"series\":{\"stacking\":null,\"error_y\":{\"type\":\"data\",\"visible\":true}},\"seriesOptions\":{\"column_d7d540914574\":{\"name\":\"total_sales\",\"yAxis\":0}},\"valuesOptions\":{},\"direction\":{\"type\":\"counterclockwise\"},\"sizemode\":\"diameter\",\"coefficient\":1,\"numberFormat\":\"0,0.[00000]\",\"percentFormat\":\"0[.]00%\",\"textFormat\":\"\",\"missingValuesAsZero\":true,\"useAggregationsUi\":true,\"swappedAxes\":true,\"dateTimeFormat\":\"YYYY-MM-DD HH:mm:ss\",\"showDataLabels\":false,\"columnConfigurationMap\":{\"x\":{\"column\":\"store_name\",\"id\":\"column_d7d540914573\"},\"y\":[{\"column\":\"total_sales\",\"transform\":\"SUM\",\"id\":\"column_d7d540914574\"}]},\"condensed\":true,\"withRowNumber\":true}",
+            "query_name" : "f64f387e9419402a8a18b8299d8f9f75"
+          }
+        }
+      },
+      "position" : {
+        "x" : 0,
+        "y" : 8,
+        "width" : 3,
+        "height" : 6
+      }
+    }, {
+      "widget" : {
+        "name" : "a0ce9c28",
+        "queries" : [ {
+          "name" : "8a64a2e53e19469eb4e700ca96604f28",
+          "query" : {
+            "datasetName" : "c2111dc4",
+            "fields" : [ {
+              "name" : "month",
+              "expression" : "`month`"
+            }, {
+              "name" : "column_d7d540914978",
+              "expression" : "SUM(`monthly_sales`)"
+            } ],
+            "disaggregated" : false
+          }
+        } ],
+        "spec" : {
+          "version" : 0,
+          "viz_spec" : {
+            "display_name" : "売上遷移",
+            "description" : "",
+            "viz_type" : "CHART",
+            "serialized_options" : "{\"version\":2,\"globalSeriesType\":\"line\",\"sortX\":true,\"sortY\":true,\"legend\":{\"traceorder\":\"normal\"},\"xAxis\":{\"type\":\"-\",\"labels\":{\"enabled\":true}},\"yAxis\":[{\"type\":\"-\"},{\"type\":\"-\",\"opposite\":true}],\"alignYAxesAtZero\":true,\"error_y\":{\"type\":\"data\",\"visible\":true},\"series\":{\"stacking\":null,\"error_y\":{\"type\":\"data\",\"visible\":true}},\"seriesOptions\":{\"column_d7d540914978\":{\"name\":\"monthly_sales\",\"yAxis\":0,\"type\":\"line\"}},\"valuesOptions\":{},\"direction\":{\"type\":\"counterclockwise\"},\"sizemode\":\"diameter\",\"coefficient\":1,\"numberFormat\":\"0,0.[00000]\",\"percentFormat\":\"0[.]00%\",\"textFormat\":\"\",\"missingValuesAsZero\":true,\"useAggregationsUi\":true,\"swappedAxes\":false,\"dateTimeFormat\":\"YYYY-MM-DD HH:mm:ss\",\"showDataLabels\":false,\"columnConfigurationMap\":{\"x\":{\"column\":\"month\",\"id\":\"column_d7d540914977\"},\"y\":[{\"column\":\"monthly_sales\",\"transform\":\"SUM\",\"id\":\"column_d7d540914978\"}]},\"condensed\":true,\"withRowNumber\":true}",
+            "query_name" : "8a64a2e53e19469eb4e700ca96604f28"
+          }
+        }
+      },
+      "position" : {
+        "x" : 0,
+        "y" : 14,
+        "width" : 3,
+        "height" : 6
+      }
+    }, {
+      "widget" : {
+        "name" : "f455ae0b",
+        "queries" : [ {
+          "name" : "2b9340d18cef47ebaf956dcf16d7ad40",
+          "query" : {
+            "datasetName" : "196c53b6",
+            "fields" : [ {
+              "name" : "category",
+              "expression" : "`category`"
+            }, {
+              "name" : "column_d7d540915258",
+              "expression" : "SUM(`category_sales`)"
+            } ],
+            "disaggregated" : false
+          }
+        } ],
+        "spec" : {
+          "version" : 0,
+          "viz_spec" : {
+            "display_name" : "商品カテゴリ別売上",
+            "description" : "",
+            "viz_type" : "CHART",
+            "serialized_options" : "{\"version\":2,\"globalSeriesType\":\"column\",\"sortX\":true,\"sortY\":true,\"legend\":{\"traceorder\":\"normal\"},\"xAxis\":{\"type\":\"-\",\"labels\":{\"enabled\":true}},\"yAxis\":[{\"type\":\"-\"},{\"type\":\"-\",\"opposite\":true}],\"alignYAxesAtZero\":true,\"error_y\":{\"type\":\"data\",\"visible\":true},\"series\":{\"stacking\":null,\"error_y\":{\"type\":\"data\",\"visible\":true}},\"seriesOptions\":{\"column_d7d540915258\":{\"name\":\"category_sales\",\"yAxis\":0}},\"valuesOptions\":{},\"direction\":{\"type\":\"counterclockwise\"},\"sizemode\":\"diameter\",\"coefficient\":1,\"numberFormat\":\"0,0.[00000]\",\"percentFormat\":\"0[.]00%\",\"textFormat\":\"\",\"missingValuesAsZero\":true,\"useAggregationsUi\":true,\"swappedAxes\":true,\"dateTimeFormat\":\"YYYY-MM-DD HH:mm:ss\",\"showDataLabels\":false,\"columnConfigurationMap\":{\"x\":{\"column\":\"category\",\"id\":\"column_d7d540915257\"},\"y\":[{\"column\":\"category_sales\",\"transform\":\"SUM\",\"id\":\"column_d7d540915258\"}]},\"condensed\":true,\"withRowNumber\":true}",
+            "query_name" : "2b9340d18cef47ebaf956dcf16d7ad40"
+          }
+        }
+      },
+      "position" : {
+        "x" : 3,
+        "y" : 8,
+        "width" : 3,
+        "height" : 6
+      }
+    }, {
+      "widget" : {
+        "name" : "3940256c",
+        "queries" : [ {
+          "name" : "2c273670831c44768e55fdea35a83e35",
+          "query" : {
+            "datasetName" : "56184142",
+            "disaggregated" : true
+          }
+        } ],
+        "spec" : {
+          "version" : 0,
+          "viz_spec" : {
+            "display_name" : "優良顧客ランキング（Top 10）",
+            "description" : "",
+            "viz_type" : "TABLE",
+            "serialized_options" : "{\"itemsPerPage\":25,\"condensed\":true,\"withRowNumber\":false,\"columns\":[{\"numberFormat\":\"0\",\"booleanValues\":[\"false\",\"true\"],\"imageUrlTemplate\":\"{{ @ }}\",\"imageTitleTemplate\":\"{{ @ }}\",\"imageWidth\":\"\",\"imageHeight\":\"\",\"linkUrlTemplate\":\"{{ @ }}\",\"linkTextTemplate\":\"{{ @ }}\",\"linkTitleTemplate\":\"{{ @ }}\",\"linkOpenInNewTab\":true,\"name\":\"customer_id\",\"type\":\"integer\",\"displayAs\":\"number\",\"visible\":true,\"order\":100000,\"title\":\"customer_id\",\"allowSearch\":false,\"alignContent\":\"right\",\"allowHTML\":false,\"highlightLinks\":false,\"useMonospaceFont\":false,\"preserveWhitespace\":false},{\"numberFormat\":\"0.00\",\"booleanValues\":[\"false\",\"true\"],\"imageUrlTemplate\":\"{{ @ }}\",\"imageTitleTemplate\":\"{{ @ }}\",\"imageWidth\":\"\",\"imageHeight\":\"\",\"linkUrlTemplate\":\"{{ @ }}\",\"linkTextTemplate\":\"{{ @ }}\",\"linkTitleTemplate\":\"{{ @ }}\",\"linkOpenInNewTab\":true,\"name\":\"total_spent\",\"type\":\"float\",\"displayAs\":\"number\",\"visible\":true,\"order\":100001,\"title\":\"total_spent\",\"allowSearch\":false,\"alignContent\":\"right\",\"allowHTML\":false,\"highlightLinks\":false,\"useMonospaceFont\":false,\"preserveWhitespace\":false},{\"numberFormat\":\"0\",\"booleanValues\":[\"false\",\"true\"],\"imageUrlTemplate\":\"{{ @ }}\",\"imageTitleTemplate\":\"{{ @ }}\",\"imageWidth\":\"\",\"imageHeight\":\"\",\"linkUrlTemplate\":\"{{ @ }}\",\"linkTextTemplate\":\"{{ @ }}\",\"linkTitleTemplate\":\"{{ @ }}\",\"linkOpenInNewTab\":true,\"name\":\"transaction_count\",\"type\":\"integer\",\"displayAs\":\"number\",\"visible\":true,\"order\":100002,\"title\":\"transaction_count\",\"allowSearch\":false,\"alignContent\":\"right\",\"allowHTML\":false,\"highlightLinks\":false,\"useMonospaceFont\":false,\"preserveWhitespace\":false}],\"version\":2}",
+            "query_name" : "2c273670831c44768e55fdea35a83e35"
+          }
+        }
+      },
+      "position" : {
+        "x" : 0,
+        "y" : 20,
+        "width" : 6,
+        "height" : 6
+      }
+    }, {
+      "widget" : {
+        "name" : "ecf1db28",
+        "queries" : [ {
+          "name" : "c6a6f064bc6a4c0bb0b0c315689ab169",
+          "query" : {
+            "datasetName" : "1b19a5bf",
+            "fields" : [ {
+              "name" : "total_quantity",
+              "expression" : "`total_quantity`"
+            }, {
+              "name" : "purchase_frequency",
+              "expression" : "`purchase_frequency`"
+            }, {
+              "name" : "column_d7d540916035",
+              "expression" : "SUM(`customer_id`)"
+            } ],
+            "disaggregated" : false
+          }
+        } ],
+        "spec" : {
+          "version" : 0,
+          "viz_spec" : {
+            "display_name" : "Heatmap 1",
+            "description" : "",
+            "viz_type" : "CHART",
+            "serialized_options" : "{\"version\":2,\"globalSeriesType\":\"heatmap\",\"sortX\":true,\"sortY\":true,\"legend\":{\"traceorder\":\"normal\"},\"xAxis\":{\"type\":\"-\",\"labels\":{\"enabled\":true}},\"yAxis\":[{\"type\":\"-\"},{\"type\":\"-\",\"opposite\":true}],\"alignYAxesAtZero\":true,\"error_y\":{\"type\":\"data\",\"visible\":true},\"series\":{\"stacking\":null,\"error_y\":{\"type\":\"data\",\"visible\":true}},\"seriesOptions\":{\"column_d7d540915990\":{\"yAxis\":0,\"type\":\"heatmap\"},\"column_d7d540915992\":{\"yAxis\":0,\"type\":\"heatmap\"},\"column_d7d540915994\":{\"yAxis\":0,\"type\":\"heatmap\"}},\"valuesOptions\":{},\"direction\":{\"type\":\"counterclockwise\"},\"sizemode\":\"diameter\",\"coefficient\":1,\"numberFormat\":\"0,0.[00000]\",\"percentFormat\":\"0[.]00%\",\"textFormat\":\"\",\"missingValuesAsZero\":true,\"useAggregationsUi\":true,\"swappedAxes\":false,\"dateTimeFormat\":\"YYYY-MM-DD HH:mm:ss\",\"showDataLabels\":false,\"columnConfigurationMap\":{\"x\":{\"column\":\"total_quantity\",\"id\":\"column_d7d540915993\"},\"y\":[{\"column\":\"purchase_frequency\",\"id\":\"column_d7d540915994\"}],\"zVal\":{\"id\":\"column_d7d540916035\",\"column\":\"customer_id\",\"transform\":\"SUM\"}},\"condensed\":true,\"withRowNumber\":true,\"isAggregationOn\":true}",
+            "query_name" : "c6a6f064bc6a4c0bb0b0c315689ab169"
+          }
+        }
+      },
+      "position" : {
+        "x" : 3,
+        "y" : 14,
+        "width" : 3,
+        "height" : 6
+      }
+    } ],
+    "pageType" : "PAGE_TYPE_CANVAS"
+  } ],
+  "uiSettings" : {
+    "theme" : { }
+  }
+}

@@ -1,0 +1,201 @@
+product_id,product_name,category,price
+1,Product_1,Grocery,41.69
+2,Product_2,Household,90.85
+3,Product_3,Beverage,71.69
+4,Product_4,Beverage,61.18
+5,Product_5,Household,31.63
+6,Product_6,Grocery,82.56
+7,Product_7,Grocery,95.55
+8,Product_8,Snacks,82.3
+9,Product_9,Personal Care,1.15
+10,Product_10,Household,64.0
+11,Product_11,Household,6.06
+12,Product_12,Household,26.5
+13,Product_13,Grocery,6.89
+14,Product_14,Personal Care,60.78
+15,Product_15,Snacks,68.97
+16,Product_16,Beverage,12.33
+17,Product_17,Beverage,39.0
+18,Product_18,Household,46.17
+19,Product_19,Personal Care,37.54
+20,Product_20,Grocery,12.98
+21,Product_21,Personal Care,42.48
+22,Product_22,Personal Care,75.37
+23,Product_23,Grocery,8.03
+24,Product_24,Household,8.94
+25,Product_25,Personal Care,36.12
+26,Product_26,Beverage,94.23
+27,Product_27,Grocery,67.19
+28,Product_28,Snacks,68.19
+29,Product_29,Household,36.83
+30,Product_30,Grocery,59.77
+31,Product_31,Snacks,2.0
+32,Product_32,Snacks,63.97
+33,Product_33,Personal Care,91.42
+34,Product_34,Personal Care,61.64
+35,Product_35,Personal Care,87.5
+36,Product_36,Grocery,72.67
+37,Product_37,Grocery,12.94
+38,Product_38,Household,90.34
+39,Product_39,Personal Care,7.58
+40,Product_40,Snacks,53.86
+41,Product_41,Beverage,15.07
+42,Product_42,Household,2.16
+43,Product_43,Grocery,42.78
+44,Product_44,Household,30.21
+45,Product_45,Household,49.11
+46,Product_46,Household,58.14
+47,Product_47,Household,5.33
+48,Product_48,Beverage,13.18
+49,Product_49,Personal Care,56.31
+50,Product_50,Snacks,34.97
+51,Product_51,Household,73.19
+52,Product_52,Household,65.58
+53,Product_53,Household,84.71
+54,Product_54,Personal Care,69.56
+55,Product_55,Grocery,43.56
+56,Product_56,Grocery,67.62
+57,Product_57,Beverage,28.26
+58,Product_58,Grocery,31.33
+59,Product_59,Household,79.11
+60,Product_60,Household,45.2
+61,Product_61,Household,80.04
+62,Product_62,Beverage,82.42
+63,Product_63,Household,85.9
+64,Product_64,Grocery,91.75
+65,Product_65,Personal Care,43.67
+66,Product_66,Personal Care,32.57
+67,Product_67,Snacks,58.64
+68,Product_68,Grocery,37.75
+69,Product_69,Household,60.51
+70,Product_70,Personal Care,70.85
+71,Product_71,Grocery,69.15
+72,Product_72,Personal Care,38.08
+73,Product_73,Household,17.52
+74,Product_74,Personal Care,43.62
+75,Product_75,Snacks,15.12
+76,Product_76,Snacks,89.12
+77,Product_77,Personal Care,35.24
+78,Product_78,Grocery,16.29
+79,Product_79,Grocery,3.52
+80,Product_80,Grocery,64.94
+81,Product_81,Personal Care,64.05
+82,Product_82,Grocery,34.72
+83,Product_83,Household,8.1
+84,Product_84,Snacks,41.55
+85,Product_85,Household,31.81
+86,Product_86,Grocery,68.03
+87,Product_87,Household,60.97
+88,Product_88,Grocery,37.09
+89,Product_89,Personal Care,22.57
+90,Product_90,Household,98.82
+91,Product_91,Personal Care,45.95
+92,Product_92,Personal Care,69.14
+93,Product_93,Beverage,14.91
+94,Product_94,Grocery,49.07
+95,Product_95,Snacks,3.73
+96,Product_96,Grocery,51.04
+97,Product_97,Snacks,96.44
+98,Product_98,Grocery,39.04
+99,Product_99,Personal Care,4.86
+100,Product_100,Household,4.06
+101,Product_101,Household,39.41
+102,Product_102,Beverage,16.84
+103,Product_103,Snacks,3.31
+104,Product_104,Snacks,75.87
+105,Product_105,Snacks,46.39
+106,Product_106,Personal Care,29.64
+107,Product_107,Snacks,90.11
+108,Product_108,Household,12.5
+109,Product_109,Personal Care,95.64
+110,Product_110,Grocery,32.08
+111,Product_111,Snacks,88.95
+112,Product_112,Snacks,60.69
+113,Product_113,Grocery,82.84
+114,Product_114,Snacks,98.42
+115,Product_115,Grocery,29.55
+116,Product_116,Personal Care,96.15
+117,Product_117,Household,39.56
+118,Product_118,Grocery,39.17
+119,Product_119,Beverage,34.7
+120,Product_120,Grocery,54.6
+121,Product_121,Snacks,16.26
+122,Product_122,Personal Care,55.82
+123,Product_123,Personal Care,54.63
+124,Product_124,Grocery,76.43
+125,Product_125,Household,83.53
+126,Product_126,Beverage,44.6
+127,Product_127,Personal Care,30.93
+128,Product_128,Snacks,26.67
+129,Product_129,Snacks,20.27
+130,Product_130,Household,6.71
+131,Product_131,Personal Care,34.9
+132,Product_132,Grocery,27.75
+133,Product_133,Snacks,96.68
+134,Product_134,Household,56.21
+135,Product_135,Personal Care,35.38
+136,Product_136,Personal Care,58.47
+137,Product_137,Personal Care,14.78
+138,Product_138,Personal Care,44.96
+139,Product_139,Personal Care,63.0
+140,Product_140,Snacks,49.4
+141,Product_141,Household,40.78
+142,Product_142,Personal Care,99.39
+143,Product_143,Beverage,88.15
+144,Product_144,Beverage,62.72
+145,Product_145,Household,57.37
+146,Product_146,Grocery,62.45
+147,Product_147,Grocery,20.93
+148,Product_148,Grocery,40.12
+149,Product_149,Beverage,4.91
+150,Product_150,Grocery,48.08
+151,Product_151,Snacks,54.76
+152,Product_152,Personal Care,23.55
+153,Product_153,Beverage,96.44
+154,Product_154,Household,91.04
+155,Product_155,Household,72.49
+156,Product_156,Personal Care,53.81
+157,Product_157,Beverage,87.13
+158,Product_158,Grocery,13.93
+159,Product_159,Grocery,79.26
+160,Product_160,Snacks,13.36
+161,Product_161,Snacks,79.63
+162,Product_162,Grocery,28.3
+163,Product_163,Household,87.83
+164,Product_164,Household,94.46
+165,Product_165,Snacks,15.73
+166,Product_166,Personal Care,46.8
+167,Product_167,Grocery,98.12
+168,Product_168,Snacks,48.86
+169,Product_169,Snacks,86.49
+170,Product_170,Grocery,59.28
+171,Product_171,Grocery,38.16
+172,Product_172,Household,29.29
+173,Product_173,Personal Care,21.12
+174,Product_174,Personal Care,76.42
+175,Product_175,Grocery,39.27
+176,Product_176,Beverage,51.62
+177,Product_177,Snacks,49.74
+178,Product_178,Snacks,58.15
+179,Product_179,Grocery,86.69
+180,Product_180,Beverage,98.09
+181,Product_181,Household,41.35
+182,Product_182,Grocery,82.92
+183,Product_183,Grocery,76.69
+184,Product_184,Snacks,57.78
+185,Product_185,Grocery,95.65
+186,Product_186,Grocery,20.85
+187,Product_187,Grocery,11.82
+188,Product_188,Snacks,85.54
+189,Product_189,Household,44.48
+190,Product_190,Household,84.85
+191,Product_191,Grocery,89.42
+192,Product_192,Snacks,7.18
+193,Product_193,Household,88.46
+194,Product_194,Household,45.38
+195,Product_195,Household,51.53
+196,Product_196,Snacks,63.03
+197,Product_197,Snacks,92.71
+198,Product_198,Grocery,2.89
+199,Product_199,Personal Care,48.21
+200,Product_200,Household,69.08

@@ -130,15 +130,32 @@ for category in categories:
             src_path = f"{workspace_category_path}/{file_name}"
             dst_path = f"{category_volume_path}/{file_name}"
             
+            print(f"  📄 処理対象: {file_name}")
+            print(f"    コピー元: {src_path}")
+            print(f"    コピー先: {dst_path}")
+            
+            # コピー元ファイルの存在確認
             try:
-                print(f"  コピー実行: {src_path} → {dst_path}")
-                dbutils.fs.cp(src_path, dst_path)
-                print(f"  ✅ コピー完了: {file_name}")
+                src_info = dbutils.fs.ls(src_path)
+                print(f"    ✅ コピー元ファイル確認済み ({src_info[0].size} bytes)")
             except Exception as e:
-                print(f"  ❌ コピー失敗: {file_name}")
-                print(f"    エラー詳細: {e}")
-                print(f"    コピー元: {src_path}")
-                print(f"    コピー先: {dst_path}")
+                print(f"    ❌ コピー元ファイル不存在: {e}")
+                continue
+                
+            # コピー実行
+            try:
+                dbutils.fs.cp(src_path, dst_path)
+                print(f"    ✅ コピー完了: {file_name}")
+                
+                # コピー後の確認
+                dst_info = dbutils.fs.ls(dst_path)
+                print(f"    ✅ コピー先確認済み ({dst_info[0].size} bytes)")
+                
+            except Exception as e:
+                print(f"    ❌ コピー失敗: {file_name}")
+                print(f"      エラー詳細: {e}")
+                print(f"      コピー元: {src_path}")
+                print(f"      コピー先: {dst_path}")
                 
     except Exception as e:
         print(f"❌ {category} の処理でエラー: {e}")
@@ -151,18 +168,42 @@ for category in categories:
 # COMMAND ----------
 
 print("=== Volume内のファイル一覧 ===")
+print(f"確認対象Volume: {volume_path}")
+
 try:
     volume_files = dbutils.fs.ls(volume_path)
+    print(f"Volume直下のアイテム数: {len(volume_files)}")
+    
     for item in volume_files:
-        print(f"📁 {item.name}")
+        print(f"\n📁 {item.name} ({item.path})")
         if item.isDir():
-            sub_items = dbutils.fs.ls(item.path)
-            for sub_item in sub_items:
-                if sub_item.name.endswith('.md'):
+            try:
+                sub_items = dbutils.fs.ls(item.path)
+                print(f"  サブアイテム数: {len(sub_items)}")
+                
+                for sub_item in sub_items:
                     size_kb = sub_item.size / 1024
-                    print(f"   📄 {sub_item.name} ({size_kb:.1f} KB)")
+                    file_type = "📄" if sub_item.name.endswith('.md') else "📄"
+                    print(f"    {file_type} {sub_item.name} ({size_kb:.1f} KB)")
+                    
+            except Exception as e:
+                print(f"  ❌ サブディレクトリ読み込みエラー: {e}")
+        else:
+            size_kb = item.size / 1024
+            print(f"  📄 ファイル: {item.name} ({size_kb:.1f} KB)")
+            
 except Exception as e:
-    print(f"Volume内容確認エラー: {e}")
+    print(f"❌ Volume内容確認エラー: {e}")
+    print("Volumeが存在しないか、アクセス権限がありません")
+    
+    # 代替確認: 利用可能なVolumeを表示
+    try:
+        print("\n=== 利用可能なVolume一覧 ===")
+        available_volumes = spark.sql("SHOW VOLUMES").collect()
+        for vol in available_volumes:
+            print(f"  📦 {vol}")
+    except Exception as e2:
+        print(f"Volume一覧取得エラー: {e2}")
 
 # COMMAND ----------
 

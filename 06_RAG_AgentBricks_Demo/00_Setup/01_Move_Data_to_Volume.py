@@ -1,7 +1,7 @@
 # Databricks notebook source
 # MAGIC %md
 # MAGIC # Agent Bricks用データセットをVolumeに移動
-# MAGIC 
+# MAGIC
 # MAGIC このノートブックでは、Agent Bricksで使用するナレッジベース（Markdownファイル）を  
 # MAGIC Unity Catalog Volumeに移動し、RAGシステムで利用できるように準備します。
 
@@ -15,8 +15,8 @@
 # Note: spark と dbutils は Databricks ランタイムで自動的に利用可能です
 
 # カタログとスキーマの作成
-catalog_name = "yukiteru_rag"
-schema_name = "knowledge_base"
+catalog_name = "users"
+schema_name = "yukiteru_koide"
 volume_name = "documents"
 
 # カタログ作成（既に存在する場合はスキップ）
@@ -42,7 +42,7 @@ print(f"Volume '{catalog_name}.{schema_name}.{volume_name}' を作成しまし�
 # COMMAND ----------
 
 # Workspaceのナレッジベースファイル一覧を確認
-workspace_path = "/Workspace/Repos/yukiteru.koide@databricks.com/Demo/06_RAG_AgentBricks_Demo/01_Knowledge_Base"
+workspace_path = "/Workspace/Users/yukiteru.koide@databricks.com/00_Demo/06_RAG_AgentBricks_Demo/01_Knowledge_Base"
 
 print("=== Workspace内のナレッジベースファイル ===")
 try:
@@ -154,13 +154,13 @@ except Exception as e:
 
 # MAGIC %md
 # MAGIC ## 6. 次のステップ
-# MAGIC 
+# MAGIC
 # MAGIC ✅ **完了**: ナレッジベースファイルがVolumeに移動されました  
-# MAGIC 
+# MAGIC
 # MAGIC **次に実行すべき作業:**
 # MAGIC 1. **簡易インジェスト**: Agent BricksのYAMLで直接Volumeパスを指定
 # MAGIC 2. **カスタムパイプライン**: チャンク化→埋め込み→Deltaテーブル→Vector Index作成
-# MAGIC 
+# MAGIC
 # MAGIC **Volume パス:**
 # MAGIC ```
 # MAGIC /Volumes/yukiteru_rag/knowledge_base/documents/

@@ -83,8 +83,9 @@ for category in categories:
     dbutils.fs.mkdirs(category_volume_path)
     print(f"ディレクトリ作成: {category_volume_path}")
     
-    # ワークスペースからファイルをコピー
-    workspace_category_path = f"file:/Workspace/Repos/yukiteru.koide@databricks.com/Demo/06_RAG_AgentBricks_Demo/01_Knowledge_Base/{category}"
+    # ワークスペースからファイルをコピー（確認済みのパスを使用）
+    workspace_category_path = f"file:{workspace_path}/{category}"
+    print(f"コピー元パス: {workspace_category_path}")
     
     try:
         # ディレクトリ内のMarkdownファイルを取得
@@ -100,10 +101,14 @@ for category in categories:
             dst_path = f"{category_volume_path}/{file_name}"
             
             try:
+                print(f"  コピー実行: {src_path} → {dst_path}")
                 dbutils.fs.cp(src_path, dst_path)
-                print(f"✅ コピー完了: {file_name}")
+                print(f"  ✅ コピー完了: {file_name}")
             except Exception as e:
-                print(f"❌ コピー失敗: {file_name} - {e}")
+                print(f"  ❌ コピー失敗: {file_name}")
+                print(f"    エラー詳細: {e}")
+                print(f"    コピー元: {src_path}")
+                print(f"    コピー先: {dst_path}")
                 
     except Exception as e:
         print(f"❌ {category} の処理でエラー: {e}")

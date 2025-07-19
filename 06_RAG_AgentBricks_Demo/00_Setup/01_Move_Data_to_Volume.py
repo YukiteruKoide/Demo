@@ -20,19 +20,46 @@ schema_name = "yukiteru_koide"
 volume_name = "documents"
 
 # カタログ作成（既に存在する場合はスキップ）
-spark.sql(f"CREATE CATALOG IF NOT EXISTS {catalog_name}")
-print(f"カタログ '{catalog_name}' を作成しました")
+try:
+    spark.sql(f"CREATE CATALOG IF NOT EXISTS {catalog_name}")
+    print(f"✅ カタログ '{catalog_name}' を作成しました")
+except Exception as e:
+    print(f"⚠️ カタログ作成エラー: {e}")
+    print("デフォルトカタログを使用します")
+    catalog_name = "users"
+    schema_name = "yukiteru_koide"
 
 # スキーマ作成
-spark.sql(f"CREATE SCHEMA IF NOT EXISTS {catalog_name}.{schema_name}")
-print(f"スキーマ '{catalog_name}.{schema_name}' を作成しました")
+try:
+    spark.sql(f"CREATE SCHEMA IF NOT EXISTS {catalog_name}.{schema_name}")
+    print(f"✅ スキーマ '{catalog_name}.{schema_name}' を作成しました")
+except Exception as e:
+    print(f"⚠️ スキーマ作成エラー: {e}")
 
 # Volume作成
-spark.sql(f"""
-CREATE VOLUME IF NOT EXISTS {catalog_name}.{schema_name}.{volume_name}
-COMMENT 'Agent Bricks用ナレッジベースドキュメント格納Volume'
-""")
-print(f"Volume '{catalog_name}.{schema_name}.{volume_name}' を作成しました")
+try:
+    spark.sql(f"""
+    CREATE VOLUME IF NOT EXISTS {catalog_name}.{schema_name}.{volume_name}
+    COMMENT 'Agent Bricks用ナレッジベースドキュメント格納Volume'
+    """)
+    print(f"✅ Volume '{catalog_name}.{schema_name}.{volume_name}' を作成しました")
+except Exception as e:
+    print(f"⚠️ Volume作成エラー: {e}")
+    print(f"既存のVolumeを確認します: {catalog_name}.{schema_name}.{volume_name}")
+
+# 実際のVolumeパスを確認・表示
+actual_volume_path = f"/Volumes/{catalog_name}/{schema_name}/{volume_name}"
+print(f"📍 実際のVolumeパス: {actual_volume_path}")
+
+# Volumeの存在確認
+try:
+    volume_check = spark.sql(f"DESCRIBE VOLUME {catalog_name}.{schema_name}.{volume_name}").collect()
+    print("✅ Volume の存在を確認しました")
+    for row in volume_check:
+        print(f"  {row}")
+except Exception as e:
+    print(f"⚠️ Volume確認エラー: {e}")
+    print("利用可能なVolumeを確認してください")
 
 # COMMAND ----------
 
@@ -67,10 +94,13 @@ except Exception as e:
 
 import os
 
-# Volumeのパス
+# Volumeのパス（動的に更新されたカタログ・スキーマを使用）
 volume_path = f"/Volumes/{catalog_name}/{schema_name}/{volume_name}"
 
 print(f"移動先Volume: {volume_path}")
+print(f"📍 使用するカタログ: {catalog_name}")
+print(f"📍 使用するスキーマ: {schema_name}")
+print(f"📍 使用するVolume: {volume_name}")
 
 # 各カテゴリのファイルを移動
 categories = ["business_docs", "faq", "technical_docs"]
@@ -141,8 +171,9 @@ except Exception as e:
 
 # COMMAND ----------
 
-# サンプルファイルの内容を確認
+# サンプルファイルの内容を確認（実際のVolumeパスを使用）
 sample_file = f"{volume_path}/business_docs/store_guide.md"
+print(f"確認対象ファイル: {sample_file}")
 
 try:
     with open(sample_file, 'r', encoding='utf-8') as f:
